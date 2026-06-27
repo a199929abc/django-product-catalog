@@ -41,8 +41,8 @@ python manage.py runserver
 
 Then open:
 
-- Catalog page: <http://127.0.0.1:8000/>
-- Admin: <http://127.0.0.1:8000/admin/>
+- Catalog page: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+- Admin: [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
 
 > The `db.sqlite3` file is intentionally gitignored, so a fresh clone starts with
 > an empty database. Step 4 (`migrate`) creates the schema and step 5
@@ -55,7 +55,7 @@ The catalog page (`/`) lets a user:
 
 - **Search by description** — case-insensitive substring match.
 - **Filter by category** — single category dropdown.
-- **Filter by tags** — multi-select checkboxes; a product matches if it has *any*
+- **Filter by tags** — multi-select checkboxes; a product matches if it has _any_
   of the selected tags.
 - **Combine** search + category + tags in one request.
 - **Paginate** results, with a selectable page size (25 / 50 / 100, default 25).
@@ -68,11 +68,31 @@ together narrow 30 products down to one.
 
 ## Data model
 
-| Model | Relationship |
-|-------|--------------|
-| `Category` | one category has many products (`Product.category`, FK) |
-| `Tag` | many-to-many with products (`Product.tags`) |
-| `Product` | belongs to one category, has zero or more tags |
+```mermaid
+erDiagram
+    CATEGORY ||--o{ PRODUCT : "categorizes"
+    PRODUCT }o--o{ TAG : "tagged with"
+
+    CATEGORY {
+        bigint id PK
+        string name UK
+    }
+    PRODUCT {
+        bigint id PK
+        string name
+        text description
+        bigint category_id FK
+    }
+    TAG {
+        bigint id PK
+        string name UK
+    }
+```
+
+- **Category → Product**: one-to-many (`Product.category`, FK). Each product
+  belongs to exactly one category.
+- **Product and Tag**: many-to-many (`Product.tags`). A product can have zero or
+  more tags, and a tag can apply to many products.
 
 The query logic lives in `catalog/views.py`. It uses `select_related("category")`
 and `prefetch_related("tags")` to avoid N+1 queries, and `.distinct()` on the
@@ -87,8 +107,8 @@ and filters), so you can add or edit records yourself after creating a superuser
 For one-command reproducibility, the same dataset is also exported as a fixture at
 `catalog/fixtures/sample_data.json` and loaded in step 5 above.
 
-| Categories (5) | Products (30) | Tags (10) |
-|---|---|---|
+| Categories (5)                                                | Products (30)                                             | Tags (10)                                         |
+| ------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------- |
 | ![Categories in admin](docs/screenshots/admin-categories.png) | ![Products in admin](docs/screenshots/admin-products.png) | ![Tags in admin](docs/screenshots/admin-tags.png) |
 
 ## Running the tests
@@ -118,9 +138,8 @@ both should be changed for any real deployment.
 - **Search targets the product description** (case-insensitive substring), as
   specified in the brief. Product names are not searched.
 - **Tag filtering uses OR semantics** — selecting multiple tags returns products
-  that have *any* of them. (AND semantics, requiring all selected tags, would be a
+  that have _any_ of them. (AND semantics, requiring all selected tags, would be a
   one-line change if preferred.)
 - **The catalog is served at `/`.** The earlier `/products/` URL still works and
   redirects to `/`.
 - **SQLite** is used for simplicity; nothing in the app is SQLite-specific.
-```

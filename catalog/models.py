@@ -1,7 +1,13 @@
+"""Database models for the product catalog.
+
+A Product belongs to exactly one Category and can carry any number of Tags.
+"""
+
 from django.db import models
 
 
 class Category(models.Model):
+    """A category that groups related products; each product belongs to one category."""
     name = models.CharField(max_length=100, unique=True)
 
     class Meta:
@@ -13,6 +19,7 @@ class Category(models.Model):
 
 
 class Tag(models.Model):
+    """A reusable tag that can be assigned to multiple products."""
     name = models.CharField(max_length=100, unique=True)
 
     class Meta:
@@ -23,6 +30,7 @@ class Tag(models.Model):
 
 
 class Product(models.Model):
+    """A product in the catalog. Each product belongs to one category and can have multiple tags."""
     name = models.CharField(max_length=255)
     description = models.TextField()
     category = models.ForeignKey(

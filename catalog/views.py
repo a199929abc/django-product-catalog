@@ -9,6 +9,15 @@ DEFAULT_PAGE_SIZE = PAGE_SIZES[0]
 
 
 def product_list(request):
+    """Render the catalog page with optional search, filtering, and pagination.
+
+    Query parameters (all optional):
+        q:        case-insensitive substring matched against the description.
+        category: category id; limits results to that category.
+        tags:     one or more tag ids; a product matches if it has any of them.
+        per_page: page size, one of PAGE_SIZES (defaults to DEFAULT_PAGE_SIZE).
+        page:     page number; invalid or out-of-range values fall back sensibly.
+    """
     search_query = request.GET.get("q", "").strip()
     category_id = request.GET.get("category", "")
     raw_tag_ids = request.GET.getlist("tags")

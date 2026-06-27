@@ -7,6 +7,8 @@ from .models import Category, Product, Tag
 
 
 class ProductListViewTests(TestCase):
+    """Search, category/tag filtering, combining filters, and invalid-input handling."""
+
     @classmethod
     def setUpTestData(cls):
         cls.electronics = Category.objects.create(name="Electronics")
@@ -152,6 +154,8 @@ class ProductListViewTests(TestCase):
 
 
 class ProductListPaginationTests(TestCase):
+    """Pagination behavior: default size, 50/100 page-size options, and out-of-range pages."""
+
     @classmethod
     def setUpTestData(cls):
         category = Category.objects.create(name="Bulk")
