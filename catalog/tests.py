@@ -1,3 +1,5 @@
+from urllib.parse import parse_qs
+
 from django.test import TestCase
 from django.urls import reverse
 
@@ -34,6 +36,17 @@ class ProductListViewTests(TestCase):
             category=cls.office_supplies,
         )
         cls.notebook.tags.add(cls.compact)
+
+    def test_root_url_serves_product_list(self):
+        response = self.client.get("/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Wireless Mouse")
+
+    def test_products_url_redirects_to_root(self):
+        response = self.client.get("/products/")
+
+        self.assertRedirects(response, "/")
 
     def test_product_list_displays_all_products_by_default(self):
         response = self.client.get(reverse("product_list"))
@@ -136,3 +149,62 @@ class ProductListViewTests(TestCase):
         self.assertContains(response, "Wireless Mouse")
         self.assertContains(response, "Mechanical Keyboard")
         self.assertContains(response, "Notebook Set")
+
+
+class ProductListPaginationTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        category = Category.objects.create(name="Bulk")
+        for index in range(60):
+            Product.objects.create(
+                name=f"Product {index:02d}",
+                description=f"Sample product number {index} for pagination.",
+                category=category,
+            )
+
+    def test_default_page_size_is_25(self):
+        response = self.client.get(reverse("product_list"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context["page_obj"]), 25)
+
+    def test_last_page_returns_remaining_products(self):
+        response = self.client.get(reverse("product_list"), {"page": 3})
+
+        # 60 products at 25 per page -> page 3 holds the remaining 10.
+        self.assertEqual(len(response.context["page_obj"]), 10)
+        self.assertEqual(response.context["page_obj"].number, 3)
+
+    def test_per_page_can_be_increased_to_50(self):
+        response = self.client.get(reverse("product_list"), {"per_page": 50})
+
+        self.assertEqual(len(response.context["page_obj"]), 50)
+
+    def test_per_page_can_be_increased_to_100(self):
+        response = self.client.get(reverse("product_list"), {"per_page": 100})
+
+        # Only 60 products exist, so all fit on a single 100-item page.
+        self.assertEqual(len(response.context["page_obj"]), 60)
+
+    def test_invalid_per_page_falls_back_to_default(self):
+        response = self.client.get(reverse("product_list"), {"per_page": "999"})
+
+        self.assertEqual(len(response.context["page_obj"]), 25)
+        self.assertEqual(response.context["selected_per_page"], 25)
+
+    def test_out_of_range_page_returns_last_page(self):
+        response = self.client.get(reverse("product_list"), {"page": 999})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["page_obj"].number, 3)
+
+    def test_pagination_preserves_filters_and_drops_page(self):
+        response = self.client.get(
+            reverse("product_list"),
+            {"per_page": 50, "q": "number"},
+        )
+
+        params = parse_qs(response.context["base_query"])
+        self.assertEqual(params["per_page"], ["50"])
+        self.assertEqual(params["q"], ["number"])
+        self.assertNotIn("page", params)

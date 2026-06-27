@@ -247,6 +247,42 @@
             color: #5f6673;
         }
 
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 26px;
+        }
+
+        .page-link {
+            padding: 9px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            background: #ffffff;
+            color: #1f2937;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .page-link:hover {
+            border-color: #6366f1;
+            color: #312e81;
+        }
+
+        .page-link.disabled {
+            color: #9ca3af;
+            border-color: #e5e7eb;
+            background: #f3f4f6;
+            pointer-events: none;
+        }
+
+        .page-info {
+            color: #5f6673;
+            font-size: 14px;
+        }
+
         @media (max-width: 1100px) {
             .product-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -343,6 +379,20 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="form-label" for="per_page">Per page</label>
+                        <select id="per_page" name="per_page">
+                            {% for size in page_sizes %}
+                                <option
+                                    value="{{ size }}"
+                                    {% if size == selected_per_page %}selected{% endif %}
+                                >
+                                    {{ size }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
                     <div class="actions">
                         <button type="submit">Apply Filters</button>
                         <a class="clear-link" href="{% url 'product_list' %}">Clear</a>
@@ -354,13 +404,13 @@
                 <div class="results-header">
                     <h2>Results</h2>
                     <span class="count">
-                        {{ products|length }} product{{ products|length|pluralize }} found
+                        {{ paginator.count }} product{{ paginator.count|pluralize }} found
                     </span>
                 </div>
 
-                {% if products %}
+                {% if page_obj %}
                     <div class="product-grid">
-                        {% for product in products %}
+                        {% for product in page_obj %}
                             <article class="product-card">
                                 <h3>{{ product.name }}</h3>
 
@@ -382,6 +432,26 @@
                             </article>
                         {% endfor %}
                     </div>
+
+                    {% if page_obj.paginator.num_pages > 1 %}
+                        <nav class="pagination">
+                            {% if page_obj.has_previous %}
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if base_query %}&{{ base_query }}{% endif %}">Previous</a>
+                            {% else %}
+                                <span class="page-link disabled">Previous</span>
+                            {% endif %}
+
+                            <span class="page-info">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                            </span>
+
+                            {% if page_obj.has_next %}
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if base_query %}&{{ base_query }}{% endif %}">Next</a>
+                            {% else %}
+                                <span class="page-link disabled">Next</span>
+                            {% endif %}
+                        </nav>
+                    {% endif %}
                 {% else %}
                     <div class="empty-state">
                         <p>No products found. Try changing your search or filters.</p>
