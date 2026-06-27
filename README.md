@@ -16,7 +16,7 @@ by category and tags. Search and filters can be combined.
 
 ```bash
 # 1. Clone and enter the project
-git clone <your-repo-url>
+git clone https://github.com/a199929abc/django-product-catalog.git
 cd django-product-catalog
 
 # 2. Create and activate a virtual environment
@@ -123,15 +123,35 @@ and graceful handling of invalid query parameters.
 
 ## Configuration notes
 
-`SECRET_KEY` is read from the `DJANGO_SECRET_KEY` environment variable and falls
-back to a development-only key when it is not set:
+The app runs on Django's local-development defaults (`DEBUG=True`, SQLite), which
+are all that's needed to run and review this take-home; production hardening is out
+of scope. `SECRET_KEY` falls back to a bundled dev key and can optionally be
+overridden with the `DJANGO_SECRET_KEY` environment variable.
 
-```bash
-export DJANGO_SECRET_KEY="your-production-secret"
-```
+## Production considerations
 
-`DEBUG = True` and the SQLite database are kept for a zero-config local setup;
-both should be changed for any real deployment.
+The catalog runs on local defaults; for a production deployment the areas I'd focus
+on:
+
+- **Server-authoritative state.** Filtering, pagination, and all writes stay on the
+  server; the database is the source of truth and the page only fetches and renders.
+  Every create/update is validated and persisted server-side. (Already true here —
+  filtering and pagination are server-side.)
+- **AuthN / AuthZ.** Keep public browsing read-only and restrict catalog edits to
+  authenticated staff, building on Django's auth and permission framework — e.g.,
+  roles such as _catalog editor_ vs. _viewer_ governing who can view, create, edit,
+  and delete products.
+- **Audit trail.** Record who changed which records and when (Django admin's
+  `LogEntry`, or `django-simple-history` for full row history), plus `created_by` /
+  `updated_by` and timestamps.
+- **CI/CD pipeline.** Run the test / lint (and type-check, once type hints are added)
+  gate automatically on every PR, and ship deploys — including DB migrations —
+  through the pipeline rather than by hand.
+- **Config & serving.** `DEBUG=False`, a real `ALLOWED_HOSTS`, and all secrets from
+  the environment.
+- **Containerization & scaling.** Package the app in a container and run several
+  stateless instances behind a load balancer. Because state lives in the database
+  rather than the process, the app scales horizontally.
 
 ## Assumptions and notes
 
@@ -143,3 +163,27 @@ both should be changed for any real deployment.
 - **The catalog is served at `/`.** The earlier `/products/` URL still works and
   redirects to `/`.
 - **SQLite** is used for simplicity; nothing in the app is SQLite-specific.
+
+## AI usage
+
+In line with the assignment's AI policy, this section documents how AI tools
+(Claude) were used. I have read and conduct **codereview** in the submission and can
+explain it.
+
+- **Data model** (`catalog/models.py`): I designed and implemented the models and
+  their relationships myself.
+- **Tests** (`catalog/tests.py`): a collaboration. I reviewed the suite to find
+  uncovered cases and to check that each test's logic was sound; AI assisted with
+  implementing the test code.
+- **README and the data-model diagram**: AI produced an initial draft and structure
+  and generated the Mermaid ER diagram from my models; I then reviewed and filled in
+  the project-specific details.
+- **HTML template** (`catalog/templates/catalog/product_list.html`): AI-assisted to
+  speed up development; I reviewed and fine-tuned the markup and styling.
+- **Search and filtering** (`catalog/views.py`): I implemented the search/filter view
+  and its querysets myself, including the OR-semantics tag filter with `.distinct()`
+  and the `select_related` / `prefetch_related` query optimization.
+- **Pagination** (`catalog/views.py`): my idea and design — I specified the behavior
+  and the cases (selectable page sizes via a whitelist, out-of-range/invalid page
+  handling, and preserving filters across page links); AI assisted with the
+  implementation, which I code reviewed and can explain.
