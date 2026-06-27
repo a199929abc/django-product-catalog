@@ -1,0 +1,512 @@
+[
+{
+  "model": "catalog.category",
+  "pk": 6,
+  "fields": {
+    "name": "Electronics"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 7,
+  "fields": {
+    "name": "Office Supplies"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 8,
+  "fields": {
+    "name": "Furniture"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 9,
+  "fields": {
+    "name": "Cleaning Supplies"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 10,
+  "fields": {
+    "name": "Kitchen"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 1,
+  "fields": {
+    "name": "Wireless"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 2,
+  "fields": {
+    "name": "Portable"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 3,
+  "fields": {
+    "name": "Compact"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 4,
+  "fields": {
+    "name": "Ergonomic"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 5,
+  "fields": {
+    "name": "Durable"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 6,
+  "fields": {
+    "name": "Heavy Duty"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 7,
+  "fields": {
+    "name": "Eco-Friendly"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 8,
+  "fields": {
+    "name": "Reusable"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 9,
+  "fields": {
+    "name": "Adjustable"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 10,
+  "fields": {
+    "name": "Space Saving"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 1,
+  "fields": {
+    "name": "Wireless Mouse",
+    "description": "A compact wireless mouse designed for everyday office work and easy laptop use.",
+    "category": 6,
+    "tags": [
+      3,
+      2,
+      1
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 2,
+  "fields": {
+    "name": "Mechanical Keyboard",
+    "description": "A durable mechanical keyboard with an ergonomic layout for long typing sessions.",
+    "category": 6,
+    "tags": [
+      5,
+      4
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 3,
+  "fields": {
+    "name": "USB-C Hub",
+    "description": "A compact USB-C hub that adds extra ports for laptops, tablets, and workstations.",
+    "category": 6,
+    "tags": [
+      3,
+      5,
+      2
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 4,
+  "fields": {
+    "name": "Noise-Canceling Headphones",
+    "description": "Wireless headphones designed to reduce background noise during meetings and focused work.",
+    "category": 6,
+    "tags": [
+      2,
+      1
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 5,
+  "fields": {
+    "name": "Webcam",
+    "description": "A compact webcam for video calls, online meetings, and remote work setups.",
+    "category": 6,
+    "tags": [
+      3,
+      2
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 6,
+  "fields": {
+    "name": "Bluetooth Speaker",
+    "description": "A portable wireless speaker for meeting rooms, break areas, or personal desk use, waterproof.",
+    "category": 6,
+    "tags": [
+      5,
+      2,
+      1
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 7,
+  "fields": {
+    "name": "Notebook Set",
+    "description": "A compact notebook set for daily notes, planning, and office tasks.",
+    "category": 7,
+    "tags": [
+      3,
+      2
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 8,
+  "fields": {
+    "name": "Ballpoint Pen Pack",
+    "description": "A durable pack of ballpoint pens for writing, labelling, and everyday office use.",
+    "category": 7,
+    "tags": [
+      3,
+      5
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 9,
+  "fields": {
+    "name": "Sticky Notes",
+    "description": "Compact sticky notes for reminders, planning, and quick office communication.",
+    "category": 7,
+    "tags": [
+      3,
+      10
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 10,
+  "fields": {
+    "name": "Desk Organizer",
+    "description": "A reusable desk organizer for pens, notes, and small office supplies.",
+    "category": 7,
+    "tags": [
+      5,
+      8,
+      10
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 11,
+  "fields": {
+    "name": "Whiteboard Markers",
+    "description": "Compact whiteboard markers for meetings, planning sessions, and office collaboration.",
+    "category": 7,
+    "tags": [
+      3,
+      8
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 12,
+  "fields": {
+    "name": "Document Folder Set",
+    "description": "A durable folder set for organizing documents, reports, and office paperwork.",
+    "category": 7,
+    "tags": [
+      5,
+      8,
+      10
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 13,
+  "fields": {
+    "name": "Ergonomic Office Chair",
+    "description": "An adjustable ergonomic office chair designed for comfort during long work sessions.",
+    "category": 8,
+    "tags": [
+      9,
+      5,
+      4
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 14,
+  "fields": {
+    "name": "Adjustable Standing Desk",
+    "description": "A heavy duty standing desk that supports both sitting and standing work setups.",
+    "category": 8,
+    "tags": [
+      9,
+      4,
+      6
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 15,
+  "fields": {
+    "name": "Filing Cabinet",
+    "description": "A durable filing cabinet for storing documents, folders, and office records.",
+    "category": 8,
+    "tags": [
+      5,
+      6,
+      10
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 16,
+  "fields": {
+    "name": "Bookshelf",
+    "description": "A space-saving bookshelf for organizing books, binders, and office materials.",
+    "category": 8,
+    "tags": [
+      5,
+      6,
+      10
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 17,
+  "fields": {
+    "name": "Monitor Stand",
+    "description": "An adjustable monitor stand that improves screen height and saves desk space.",
+    "category": 8,
+    "tags": [
+      9,
+      4,
+      10
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 18,
+  "fields": {
+    "name": "Folding Table",
+    "description": "A portable folding table for temporary work areas, meetings, or shared spaces.",
+    "category": 8,
+    "tags": [
+      5,
+      2,
+      10
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 19,
+  "fields": {
+    "name": "All-Purpose Cleaner",
+    "description": "An eco-friendly cleaner for desks, tables, counters, and shared office spaces.",
+    "category": 9,
+    "tags": [
+      7,
+      6
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 20,
+  "fields": {
+    "name": "Microfiber Cloth Set",
+    "description": "A reusable microfiber cloth set for cleaning screens, desks, and office surfaces.",
+    "category": 9,
+    "tags": [
+      3,
+      7,
+      8
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 21,
+  "fields": {
+    "name": "Trash Bags",
+    "description": "39L heavy-duty trash bags for office bins, kitchen areas, and shared workspaces.",
+    "category": 9,
+    "tags": [
+      5,
+      6
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 22,
+  "fields": {
+    "name": "Hand Soap",
+    "description": "Eco-friendly hand soap for kitchen, breakroom, and restroom areas.",
+    "category": 9,
+    "tags": [
+      7
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 23,
+  "fields": {
+    "name": "Disinfecting Wipes",
+    "description": "Compact disinfecting wipes for cleaning desks, keyboards, and shared surfaces.",
+    "category": 9,
+    "tags": [
+      3,
+      2,
+      8
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 24,
+  "fields": {
+    "name": "Recycling Bin",
+    "description": "A durable recycling bin for organizing recyclable waste in office or kitchen areas.",
+    "category": 9,
+    "tags": [
+      5,
+      7,
+      10
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 25,
+  "fields": {
+    "name": "Coffee Maker",
+    "description": "A compact coffee maker for office kitchens and breakrooms.",
+    "category": 10,
+    "tags": [
+      3,
+      5
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 26,
+  "fields": {
+    "name": "Reusable Water Bottle",
+    "description": "A portable reusable water bottle for work, travel, and daily hydration.",
+    "category": 10,
+    "tags": [
+      7,
+      2,
+      8
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 27,
+  "fields": {
+    "name": "Lunch Container Set",
+    "description": "A reusable lunch container set for office meals and food storage.",
+    "category": 10,
+    "tags": [
+      3,
+      7,
+      8
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 28,
+  "fields": {
+    "name": "Kettle",
+    "description": "A compact kettle for tea, coffee, and breakroom use.",
+    "category": 10,
+    "tags": [
+      3,
+      5
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 29,
+  "fields": {
+    "name": "Microwave Oven",
+    "description": "A compact microwave oven for heating meals in office kitchens and breakrooms.",
+    "category": 10,
+    "tags": [
+      3,
+      5
+    ]
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 30,
+  "fields": {
+    "name": "Ceramic Mug Set",
+    "description": "A reusable ceramic mug set for coffee, tea, and shared breakroom use.",
+    "category": 10,
+    "tags": [
+      5,
+      8
+    ]
+  }
+}
+]
